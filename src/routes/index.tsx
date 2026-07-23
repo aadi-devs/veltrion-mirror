@@ -106,13 +106,43 @@ function Nav() {
 
 function Hero() {
   return (
-    <section className="relative pt-20 pb-32 px-6" style={{ background: "var(--gradient-hero)" }}>
-      <div className="max-w-6xl mx-auto text-center relative z-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-card/50 backdrop-blur text-xs mb-8">
+    <section className="relative pt-24 pb-40 px-6 overflow-hidden min-h-[92vh] flex items-center">
+      {/* Animated background image */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src={heroImg}
+          alt=""
+          aria-hidden="true"
+          className="hero-bg-img absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="hero-bg-overlay absolute inset-0"
+          style={{ background: "var(--gradient-hero)" }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, oklch(0.13 0.04 285 / 0.55) 0%, oklch(0.13 0.04 285 / 0.75) 60%, oklch(0.13 0.04 285) 100%)",
+          }}
+        />
+        {/* Floating orbs */}
+        <div
+          className="hero-orb absolute top-1/4 left-[15%] w-72 h-72 rounded-full blur-3xl opacity-40"
+          style={{ background: "var(--primary)" }}
+        />
+        <div
+          className="hero-orb absolute bottom-1/4 right-[10%] w-96 h-96 rounded-full blur-3xl opacity-30"
+          style={{ background: "var(--accent-cyan)", animationDelay: "-7s" }}
+        />
+      </div>
+
+      <div className="max-w-6xl mx-auto text-center relative z-10 w-full">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-border bg-card/60 backdrop-blur text-xs mb-8">
           <Sparkles className="w-3.5 h-3.5" style={{ color: "var(--primary-glow)" }} />
           <span className="text-muted-foreground">Now live · Ryzen 9 7950X nodes in 8 regions</span>
         </div>
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.05]">
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[1.05]">
           Hosting that bends
           <br />
           <span className="bg-clip-text text-transparent" style={{ backgroundImage: "var(--gradient-primary)" }}>
@@ -130,14 +160,11 @@ function Hero() {
             See features
           </a>
         </div>
-
-        <div className="mt-16 relative rounded-2xl overflow-hidden border border-border" style={{ boxShadow: "var(--shadow-card)" }}>
-          <img src={heroImg} alt="Anuverse network visualization" width={1600} height={1000} className="w-full h-auto" />
-        </div>
       </div>
     </section>
   );
 }
+
 
 const features = [
   { icon: Zap, title: "Instant Deploy", desc: "Your server spins up in under 60 seconds. No waiting, no tickets." },

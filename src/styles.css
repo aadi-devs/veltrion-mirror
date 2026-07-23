@@ -8,6 +8,33 @@
   }
 }
 
+@keyframes heroDrift {
+  0%   { transform: scale(1.15) translate3d(0, 0, 0); }
+  50%  { transform: scale(1.25) translate3d(-2%, -1.5%, 0); }
+  100% { transform: scale(1.15) translate3d(0, 0, 0); }
+}
+@keyframes heroPulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 0.85; }
+}
+@keyframes floatOrb {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(3%, -4%, 0); }
+}
+
+.hero-bg-img {
+  animation: heroDrift 24s ease-in-out infinite;
+  will-change: transform;
+}
+.hero-bg-overlay {
+  animation: heroPulse 8s ease-in-out infinite;
+}
+.hero-orb {
+  animation: floatOrb 14s ease-in-out infinite;
+  will-change: transform;
+}
+
+
 
 @custom-variant dark (&:is(.dark *));
 
