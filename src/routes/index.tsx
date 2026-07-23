@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Check, Zap, Shield, Cpu, HardDrive, Globe, Headphones, Server, ArrowRight, Sparkles } from "lucide-react";
+import { Check, Zap, Shield, Cpu, HardDrive, Globe, Headphones, Server, ArrowRight, Sparkles, ChevronDown, Gamepad2, Box, Cloud, Database, LifeBuoy, FileText, MessageCircle, Users } from "lucide-react";
 import heroImg from "@/assets/hero-nebula.jpg";
 
 export const Route = createFileRoute("/")({
@@ -30,6 +30,34 @@ function Landing() {
   );
 }
 
+const navMenus = [
+  {
+    label: "Hosting",
+    items: [
+      { icon: Gamepad2, title: "Minecraft Hosting", desc: "Vanilla, modded and modpack servers" },
+      { icon: Box, title: "Game Servers", desc: "Rust, ARK, Valheim, Palworld and more" },
+      { icon: Cloud, title: "VPS Hosting", desc: "Full-root virtual private servers" },
+      { icon: Database, title: "Web Hosting", desc: "Fast NVMe cPanel & WordPress" },
+    ],
+  },
+  {
+    label: "Company",
+    items: [
+      { icon: Users, title: "About Us", desc: "The team behind Anuverse" },
+      { icon: Globe, title: "Network", desc: "8 global datacenter regions" },
+      { icon: Shield, title: "Security", desc: "DDoS protection and uptime" },
+    ],
+  },
+  {
+    label: "Support",
+    items: [
+      { icon: LifeBuoy, title: "Help Center", desc: "Guides and troubleshooting" },
+      { icon: FileText, title: "Knowledgebase", desc: "Setup docs and tutorials" },
+      { icon: MessageCircle, title: "Discord", desc: "Chat with our community" },
+    ],
+  },
+];
+
 function Nav() {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-background/60 border-b border-border">
@@ -38,11 +66,31 @@ function Nav() {
           <div className="w-8 h-8 rounded-lg" style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }} />
           Anuverse
         </a>
-        <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition">Features</a>
-          <a href="#plans" className="hover:text-foreground transition">Plans</a>
-          <a href="#locations" className="hover:text-foreground transition">Locations</a>
-          <a href="#support" className="hover:text-foreground transition">Support</a>
+        <nav className="hidden md:flex items-center gap-2 text-sm">
+          {navMenus.map((menu) => (
+            <div key={menu.label} className="relative group">
+              <button className="flex items-center gap-1 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">
+                {menu.label}
+                <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+              </button>
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[340px]">
+                <div className="rounded-2xl border border-border bg-popover/95 backdrop-blur-xl p-2" style={{ boxShadow: "var(--shadow-card)" }}>
+                  {menu.items.map((item) => (
+                    <a key={item.title} href="#" className="flex items-start gap-3 p-3 rounded-xl hover:bg-card transition group/item">
+                      <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: "var(--gradient-primary)" }}>
+                        <item.icon className="w-4 h-4 text-primary-foreground" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-sm text-foreground">{item.title}</div>
+                        <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+          <a href="#plans" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">Pricing</a>
         </nav>
         <div className="flex items-center gap-3">
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground hidden sm:block">Login</a>
@@ -54,6 +102,7 @@ function Nav() {
     </header>
   );
 }
+
 
 function Hero() {
   return (
