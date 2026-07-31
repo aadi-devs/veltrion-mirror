@@ -9,9 +9,11 @@
 }
 
 @keyframes heroDrift {
-  0%   { transform: scale(1.02) translate3d(0, 0, 0); }
-  50%  { transform: scale(1.06) translate3d(-1%, -0.75%, 0); }
-  100% { transform: scale(1.02) translate3d(0, 0, 0); }
+  0%   { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
+  25%  { transform: scale(1.11) translate3d(0.5%, -1.5%, 0); }
+  50%  { transform: scale(1.08) translate3d(1.5%, 1%, 0); }
+  75%  { transform: scale(1.11) translate3d(-0.5%, 1.5%, 0); }
+  100% { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
 }
 @keyframes heroPulse {
   0%, 100% { opacity: 0.55; }
@@ -23,7 +25,7 @@
 }
 
 .hero-bg-img {
-  animation: heroDrift 28s ease-in-out infinite;
+  animation: heroDrift 18s linear infinite;
   will-change: transform;
   image-rendering: auto;
   transform-origin: center center;
