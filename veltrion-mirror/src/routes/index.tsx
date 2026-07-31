@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, Zap, Shield, Cpu, HardDrive, Globe, Headphones, Server, ArrowRight, Sparkles, ChevronDown, Gamepad2, Box, Cloud, Database, LifeBuoy, FileText, MessageCircle, Users } from "lucide-react";
 import { useEffect, useRef } from "react";
-import heroImg from "@/assets/hero-nebula-sharp.jpg";
+import heroImg from "@/assets/hero-nebula.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -104,9 +104,9 @@ function Hero() {
     const animateHero = (now: number) => {
       const elapsed = (now - startedAt) / 1000;
       const angle = (elapsed / 18) * Math.PI * 2;
-      const x = Math.sin(angle) * 2.2;
-      const y = Math.cos(angle * 0.8) * 1.5;
-      const scale = 1.1 + (Math.sin(angle) + 1) * 0.025;
+      const x = Math.sin(angle) * 1.2;
+      const y = Math.cos(angle * 0.8) * 0.8;
+      const scale = 1.025 + (Math.sin(angle) + 1) * 0.012;
       if (heroImageRef.current) {
         heroImageRef.current.style.transform = `scale(${scale}) translate3d(${x}%, ${y}%, 0)`;
       }
