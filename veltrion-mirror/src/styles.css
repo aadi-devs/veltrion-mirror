@@ -9,13 +9,16 @@
 }
 
 @keyframes heroDrift {
-  0%   { transform: scale(1.02) translate3d(0, 0, 0); }
-  50%  { transform: scale(1.06) translate3d(-1%, -0.75%, 0); }
-  100% { transform: scale(1.02) translate3d(0, 0, 0); }
+  0%   { transform: scale(1.14) translate3d(-3%, -2%, 0); }
+  25%  { transform: scale(1.18) translate3d(2%, -3%, 0); }
+  50%  { transform: scale(1.14) translate3d(3%, 2%, 0); }
+  75%  { transform: scale(1.18) translate3d(-2%, 3%, 0); }
+  100% { transform: scale(1.14) translate3d(-3%, -2%, 0); }
 }
 @keyframes heroPulse {
-  0%, 100% { opacity: 0.55; }
-  50%      { opacity: 0.85; }
+  0%   { opacity: 0.48; transform: scale(1); }
+  50%  { opacity: 0.78; transform: scale(1.08); }
+  100% { opacity: 0.48; transform: scale(1); }
 }
 @keyframes floatOrb {
   0%, 100% { transform: translate3d(0, 0, 0); }
@@ -23,13 +26,15 @@
 }
 
 .hero-bg-img {
-  animation: heroDrift 24s ease-in-out infinite;
+  animation: heroDrift 10s linear infinite;
   will-change: transform;
   image-rendering: auto;
   transform-origin: center center;
 }
 .hero-bg-overlay {
-  animation: heroPulse 8s ease-in-out infinite;
+  animation: heroPulse 7s linear infinite;
+  transform-origin: center center;
+  will-change: transform, opacity;
 }
 .hero-orb {
   animation: floatOrb 14s ease-in-out infinite;
