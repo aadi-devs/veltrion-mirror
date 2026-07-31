@@ -26,7 +26,6 @@
 }
 
 .hero-bg-img {
-  animation: heroDrift 10s linear infinite;
   will-change: transform;
   image-rendering: auto;
   transform-origin: center center;

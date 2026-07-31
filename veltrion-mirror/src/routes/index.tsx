@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, Zap, Shield, Cpu, HardDrive, Globe, Headphones, Server, ArrowRight, Sparkles, ChevronDown, Gamepad2, Box, Cloud, Database, LifeBuoy, FileText, MessageCircle, Users } from "lucide-react";
+import { useEffect, useRef } from "react";
 import heroImg from "@/assets/hero-nebula-sharp.jpg";
 
 export const Route = createFileRoute("/")({
@@ -95,6 +96,26 @@ function NavDropdown({ label, items }: { label: string; items: { icon: React.Ele
 
 
 function Hero() {
+  const heroImageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    let frame = 0;
+    const startedAt = performance.now();
+    const animateHero = (now: number) => {
+      const elapsed = (now - startedAt) / 1000;
+      const angle = (elapsed / 18) * Math.PI * 2;
+      const x = Math.sin(angle) * 2.2;
+      const y = Math.cos(angle * 0.8) * 1.5;
+      const scale = 1.1 + (Math.sin(angle) + 1) * 0.025;
+      if (heroImageRef.current) {
+        heroImageRef.current.style.transform = `scale(${scale}) translate3d(${x}%, ${y}%, 0)`;
+      }
+      frame = requestAnimationFrame(animateHero);
+    };
+    frame = requestAnimationFrame(animateHero);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <section className="relative pt-24 pb-40 px-6 overflow-hidden min-h-[92vh] flex items-center">
       {/* Animated background image */}
@@ -103,6 +124,7 @@ function Hero() {
           src={heroImg}
           alt=""
           aria-hidden="true"
+          ref={heroImageRef}
           className="hero-bg-img absolute inset-0 w-full h-full object-cover"
         />
         <div
