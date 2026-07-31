@@ -23,8 +23,10 @@
 }
 
 .hero-bg-img {
-  animation: heroDrift 24s ease-in-out infinite;
+  animation: heroDrift 28s ease-in-out infinite;
   will-change: transform;
+  image-rendering: auto;
+  transform-origin: center center;
 }
 .hero-bg-overlay {
   animation: heroPulse 8s ease-in-out infinite;
@@ -34,6 +36,13 @@
   will-change: transform;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-img,
+  .hero-bg-overlay,
+  .hero-orb {
+    animation: none;
+  }
+}
 
 
 @custom-variant dark (&:is(.dark *));
