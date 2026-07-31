@@ -29,7 +29,7 @@ export const Route = createFileRoute("/checkout/$planId")({
 
 function Checkout() {
   const { planId } = Route.useParams();
-  const { cycle, category } = Route.useSearch();
+  const { cycle, category } = Route.useSearch() as Search;
   const { user, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
 
