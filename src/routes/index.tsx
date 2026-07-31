@@ -30,32 +30,16 @@ function Landing() {
   );
 }
 
-const navMenus = [
-  {
-    label: "Hosting",
-    items: [
-      { icon: Gamepad2, title: "Minecraft Hosting", desc: "Vanilla, modded and modpack servers" },
-      { icon: Box, title: "Game Servers", desc: "Rust, ARK, Valheim, Palworld and more" },
-      { icon: Cloud, title: "VPS Hosting", desc: "Full-root virtual private servers" },
-      { icon: Database, title: "Web Hosting", desc: "Fast NVMe cPanel & WordPress" },
-    ],
-  },
-  {
-    label: "Company",
-    items: [
-      { icon: Users, title: "About Us", desc: "The team behind Anuverse" },
-      { icon: Globe, title: "Network", desc: "8 global datacenter regions" },
-      { icon: Shield, title: "Security", desc: "DDoS protection and uptime" },
-    ],
-  },
-  {
-    label: "Support",
-    items: [
-      { icon: LifeBuoy, title: "Help Center", desc: "Guides and troubleshooting" },
-      { icon: FileText, title: "Knowledgebase", desc: "Setup docs and tutorials" },
-      { icon: MessageCircle, title: "Discord", desc: "Chat with our community" },
-    ],
-  },
+const minecraftItems = [
+  { icon: Gamepad2, title: "Java Edition", desc: "Vanilla, modded and modpack servers" },
+  { icon: Box, title: "Bedrock Edition", desc: "Cross-play survival and realms" },
+  { icon: Sparkles, title: "Modpacks", desc: "Forge, Fabric and one-click installs" },
+];
+
+const vpsItems = [
+  { icon: Cloud, title: "Linux VPS", desc: "Full-root Ubuntu, Debian and AlmaLinux" },
+  { icon: Database, title: "Storage VPS", desc: "Big NVMe blocks for backups and media" },
+  { icon: Cpu, title: "Gaming VPS", desc: "High-frequency cores for game nodes" },
 ];
 
 function Nav() {
@@ -67,30 +51,10 @@ function Nav() {
           Anuverse
         </a>
         <nav className="hidden md:flex items-center gap-2 text-sm">
-          {navMenus.map((menu) => (
-            <div key={menu.label} className="relative group">
-              <button className="flex items-center gap-1 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">
-                {menu.label}
-                <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
-              </button>
-              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[340px]">
-                <div className="rounded-2xl border border-border bg-popover/95 backdrop-blur-xl p-2" style={{ boxShadow: "var(--shadow-card)" }}>
-                  {menu.items.map((item) => (
-                    <a key={item.title} href="#" className="flex items-start gap-3 p-3 rounded-xl hover:bg-card transition group/item">
-                      <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: "var(--gradient-primary)" }}>
-                        <item.icon className="w-4 h-4 text-primary-foreground" />
-                      </div>
-                      <div className="min-w-0">
-                        <div className="font-semibold text-sm text-foreground">{item.title}</div>
-                        <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-          <a href="#plans" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">Pricing</a>
+          <NavDropdown label="Minecraft" items={minecraftItems} />
+          <NavDropdown label="VPS" items={vpsItems} />
+          <a href="#features" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">Why Us</a>
+          <a href="#support" className="px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">Discord</a>
         </nav>
         <div className="flex items-center gap-3">
           <a href="#" className="text-sm text-muted-foreground hover:text-foreground hidden sm:block">Login</a>
@@ -100,6 +64,32 @@ function Nav() {
         </div>
       </div>
     </header>
+  );
+}
+
+function NavDropdown({ label, items }: { label: string; items: { icon: React.ElementType; title: string; desc: string }[] }) {
+  return (
+    <div className="relative group">
+      <button className="flex items-center gap-1 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition">
+        {label}
+        <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+      </button>
+      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[320px]">
+        <div className="rounded-2xl border border-border bg-popover/95 backdrop-blur-xl p-2" style={{ boxShadow: "var(--shadow-card)" }}>
+          {items.map((item) => (
+            <a key={item.title} href="#plans" className="flex items-start gap-3 p-3 rounded-xl hover:bg-card transition group/item">
+              <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style={{ background: "var(--gradient-primary)" }}>
+                <item.icon className="w-4 h-4 text-primary-foreground" />
+              </div>
+              <div className="min-w-0">
+                <div className="font-semibold text-sm text-foreground">{item.title}</div>
+                <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
