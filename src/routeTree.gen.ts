@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhyUsRouteImport } from './routes/why-us'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as VpsTypeRouteImport } from './routes/vps.$type'
 import { Route as MinecraftCategoryRouteImport } from './routes/minecraft.$category'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 
+const WhyUsRoute = WhyUsRouteImport.update({
+  id: '/why-us',
+  path: '/why-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
   '/vps/$type': typeof VpsTypeRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
   '/vps/$type': typeof VpsTypeRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
   '/vps/$type': typeof VpsTypeRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/why-us'
     | '/checkout/$planId'
     | '/minecraft/$category'
     | '/vps/$type'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/why-us'
     | '/checkout/$planId'
     | '/minecraft/$category'
     | '/vps/$type'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/why-us'
     | '/checkout/$planId'
     | '/minecraft/$category'
     | '/vps/$type'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
+  WhyUsRoute: typeof WhyUsRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
   MinecraftCategoryRoute: typeof MinecraftCategoryRoute
   VpsTypeRoute: typeof VpsTypeRoute
@@ -136,6 +149,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/why-us': {
+      id: '/why-us'
+      path: '/why-us'
+      fullPath: '/why-us'
+      preLoaderRoute: typeof WhyUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
+  WhyUsRoute: WhyUsRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
   MinecraftCategoryRoute: MinecraftCategoryRoute,
   VpsTypeRoute: VpsTypeRoute,
