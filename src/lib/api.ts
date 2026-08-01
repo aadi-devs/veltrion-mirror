@@ -143,3 +143,48 @@ export function findPlan(categories: PlanCategory[], planId: string) {
   }
   return null;
 }
+
+// ── Admin ────────────────────────────────────────────────────────────────────
+export interface AdminOrder {
+  id: string;
+  order_ref: string;
+  user_id: string;
+  user_name?: string | null;
+  user_email?: string | null;
+  customer_name: string;
+  discord: string;
+  plan_id: string;
+  plan_name: string;
+  plan_category: string;
+  billing_cycle: string;
+  price: string;
+  ram: string;
+  vcores: string;
+  disk: string;
+  status: string;
+  utr: string;
+  payment_screenshot?: string | null;
+  provision_status: string;
+  server?: string | null;
+  panel_url?: string | null;
+  server_password?: string | null;
+  provision_error?: string | null;
+  created_at: string;
+}
+
+export const getAllOrders = () => request<AdminOrder[]>("/admin/all-orders");
+export const markOrderPaid = (ref: string) =>
+  request<AdminOrder>(`/admin/orders/${ref}/mark-paid`, { method: "POST" });
+export const rejectOrder = (ref: string) =>
+  request<unknown>(`/admin/orders/${ref}/reject`, { method: "POST" });
+
+/** Plan editing (requires the admin plan endpoints on the backend). */
+export const saveAdminPlan = (
+  category: "minecraft" | "vps",
+  categoryId: string,
+  plan: Plan,
+) =>
+  request<Plan>(`/admin/plans/${category}/${categoryId}/${plan.id}`, {
+    method: "PUT",
+    body: JSON.stringify(plan),
+  });

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhyUsRouteImport } from './routes/why-us'
+import { Route as DiscordRouteImport } from './routes/discord'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
@@ -22,6 +23,11 @@ import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 const WhyUsRoute = WhyUsRouteImport.update({
   id: '/why-us',
   path: '/why-us',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DiscordRoute = DiscordRouteImport.update({
+  id: '/discord',
+  path: '/discord',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/discord': typeof DiscordRoute
   '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/discord': typeof DiscordRoute
   '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
+  '/discord': typeof DiscordRoute
   '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/discord'
     | '/why-us'
     | '/checkout/$planId'
     | '/minecraft/$category'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/discord'
     | '/why-us'
     | '/checkout/$planId'
     | '/minecraft/$category'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/discord'
     | '/why-us'
     | '/checkout/$planId'
     | '/minecraft/$category'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
+  DiscordRoute: typeof DiscordRoute
   WhyUsRoute: typeof WhyUsRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
   MinecraftCategoryRoute: typeof MinecraftCategoryRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/why-us'
       fullPath: '/why-us'
       preLoaderRoute: typeof WhyUsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/discord': {
+      id: '/discord'
+      path: '/discord'
+      fullPath: '/discord'
+      preLoaderRoute: typeof DiscordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
+  DiscordRoute: DiscordRoute,
   WhyUsRoute: WhyUsRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
   MinecraftCategoryRoute: MinecraftCategoryRoute,
