@@ -9,21 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VpsRouteImport } from './routes/vps'
-import { Route as MinecraftRouteImport } from './routes/minecraft'
+import { Route as WhyUsRouteImport } from './routes/why-us'
+import { Route as DiscordRouteImport } from './routes/discord'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as VpsIndexRouteImport } from './routes/vps.index'
+import { Route as MinecraftIndexRouteImport } from './routes/minecraft.index'
+import { Route as VpsTypeRouteImport } from './routes/vps.$type'
+import { Route as MinecraftCategoryRouteImport } from './routes/minecraft.$category'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 
-const VpsRoute = VpsRouteImport.update({
-  id: '/vps',
-  path: '/vps',
+const WhyUsRoute = WhyUsRouteImport.update({
+  id: '/why-us',
+  path: '/why-us',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MinecraftRoute = MinecraftRouteImport.update({
-  id: '/minecraft',
-  path: '/minecraft',
+const DiscordRoute = DiscordRouteImport.update({
+  id: '/discord',
+  path: '/discord',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -36,9 +41,34 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VpsIndexRoute = VpsIndexRouteImport.update({
+  id: '/vps/',
+  path: '/vps/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinecraftIndexRoute = MinecraftIndexRouteImport.update({
+  id: '/minecraft/',
+  path: '/minecraft/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VpsTypeRoute = VpsTypeRouteImport.update({
+  id: '/vps/$type',
+  path: '/vps/$type',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinecraftCategoryRoute = MinecraftCategoryRouteImport.update({
+  id: '/minecraft/$category',
+  path: '/minecraft/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutPlanIdRoute = CheckoutPlanIdRouteImport.update({
@@ -49,73 +79,114 @@ const CheckoutPlanIdRoute = CheckoutPlanIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
-  '/minecraft': typeof MinecraftRoute
-  '/vps': typeof VpsRoute
+  '/discord': typeof DiscordRoute
+  '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/minecraft/$category': typeof MinecraftCategoryRoute
+  '/vps/$type': typeof VpsTypeRoute
+  '/minecraft/': typeof MinecraftIndexRoute
+  '/vps/': typeof VpsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
-  '/minecraft': typeof MinecraftRoute
-  '/vps': typeof VpsRoute
+  '/discord': typeof DiscordRoute
+  '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/minecraft/$category': typeof MinecraftCategoryRoute
+  '/vps/$type': typeof VpsTypeRoute
+  '/minecraft': typeof MinecraftIndexRoute
+  '/vps': typeof VpsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
-  '/minecraft': typeof MinecraftRoute
-  '/vps': typeof VpsRoute
+  '/discord': typeof DiscordRoute
+  '/why-us': typeof WhyUsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/minecraft/$category': typeof MinecraftCategoryRoute
+  '/vps/$type': typeof VpsTypeRoute
+  '/minecraft/': typeof MinecraftIndexRoute
+  '/vps/': typeof VpsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/auth'
     | '/dashboard'
+    | '/discord'
+    | '/why-us'
+    | '/checkout/$planId'
+    | '/minecraft/$category'
+    | '/vps/$type'
+    | '/minecraft/'
+    | '/vps/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/admin'
+    | '/auth'
+    | '/dashboard'
+    | '/discord'
+    | '/why-us'
+    | '/checkout/$planId'
+    | '/minecraft/$category'
+    | '/vps/$type'
     | '/minecraft'
     | '/vps'
-    | '/checkout/$planId'
-  fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/minecraft' | '/vps' | '/checkout/$planId'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/auth'
     | '/dashboard'
-    | '/minecraft'
-    | '/vps'
+    | '/discord'
+    | '/why-us'
     | '/checkout/$planId'
+    | '/minecraft/$category'
+    | '/vps/$type'
+    | '/minecraft/'
+    | '/vps/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
-  MinecraftRoute: typeof MinecraftRoute
-  VpsRoute: typeof VpsRoute
+  DiscordRoute: typeof DiscordRoute
+  WhyUsRoute: typeof WhyUsRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
+  MinecraftCategoryRoute: typeof MinecraftCategoryRoute
+  VpsTypeRoute: typeof VpsTypeRoute
+  MinecraftIndexRoute: typeof MinecraftIndexRoute
+  VpsIndexRoute: typeof VpsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/vps': {
-      id: '/vps'
-      path: '/vps'
-      fullPath: '/vps'
-      preLoaderRoute: typeof VpsRouteImport
+    '/why-us': {
+      id: '/why-us'
+      path: '/why-us'
+      fullPath: '/why-us'
+      preLoaderRoute: typeof WhyUsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/minecraft': {
-      id: '/minecraft'
-      path: '/minecraft'
-      fullPath: '/minecraft'
-      preLoaderRoute: typeof MinecraftRouteImport
+    '/discord': {
+      id: '/discord'
+      path: '/discord'
+      fullPath: '/discord'
+      preLoaderRoute: typeof DiscordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -132,11 +203,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vps/': {
+      id: '/vps/'
+      path: '/vps'
+      fullPath: '/vps/'
+      preLoaderRoute: typeof VpsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minecraft/': {
+      id: '/minecraft/'
+      path: '/minecraft'
+      fullPath: '/minecraft/'
+      preLoaderRoute: typeof MinecraftIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vps/$type': {
+      id: '/vps/$type'
+      path: '/vps/$type'
+      fullPath: '/vps/$type'
+      preLoaderRoute: typeof VpsTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minecraft/$category': {
+      id: '/minecraft/$category'
+      path: '/minecraft/$category'
+      fullPath: '/minecraft/$category'
+      preLoaderRoute: typeof MinecraftCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkout/$planId': {
@@ -151,11 +257,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
-  MinecraftRoute: MinecraftRoute,
-  VpsRoute: VpsRoute,
+  DiscordRoute: DiscordRoute,
+  WhyUsRoute: WhyUsRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
+  MinecraftCategoryRoute: MinecraftCategoryRoute,
+  VpsTypeRoute: VpsTypeRoute,
+  MinecraftIndexRoute: MinecraftIndexRoute,
+  VpsIndexRoute: VpsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

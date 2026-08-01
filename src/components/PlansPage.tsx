@@ -11,21 +11,34 @@ const cycles: { id: BillingCycle; label: string }[] = [
   { id: "annually", label: "Annually" },
 ];
 
+function filterCategories(cats: PlanCategory[], match?: string[]) {
+  if (!match || match.length === 0) return cats;
+  const hit = cats.filter((c) =>
+    match.some((m) => c.id.toLowerCase().includes(m) || c.name.toLowerCase().includes(m)),
+  );
+  return hit.length ? hit : cats;
+}
+
 export function PlansPage({
   title,
   subtitle,
   queryKey,
   fetcher,
   category,
+  match,
+  tabs,
 }: {
   title: string;
   subtitle: string;
   queryKey: string;
   fetcher: () => Promise<PlanCategory[]>;
   category: "minecraft" | "vps";
+  match?: string[];
+  tabs?: { slug: string; label: string; to: string }[];
 }) {
   const [cycle, setCycle] = useState<BillingCycle>("monthly");
   const { data, isLoading, error } = useQuery({ queryKey: [queryKey], queryFn: fetcher });
+  const categories = data ? filterCategories(data, match) : undefined;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -34,7 +47,22 @@ export function PlansPage({
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">{title}</h1>
         <p className="mt-3 text-muted-foreground max-w-2xl">{subtitle}</p>
 
-        <div className="mt-8 inline-flex rounded-xl border border-border bg-card/60 p-1">
+        {tabs && (
+          <div className="mt-8 flex flex-wrap gap-2">
+            {tabs.map((t) => (
+              <Link
+                key={t.slug}
+                to={t.to}
+                className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-primary/50 transition data-[status=active]:text-primary-foreground"
+                activeProps={{ style: { background: "var(--gradient-primary)" } }}
+              >
+                {t.label}
+              </Link>
+            ))}
+          </div>
+        )}
+
+        <div className="mt-6 inline-flex rounded-xl border border-border bg-card/60 p-1">
           {cycles.map((c) => (
             <button
               key={c.id}
@@ -67,7 +95,7 @@ export function PlansPage({
           </div>
         )}
 
-        {data?.map((cat) => (
+        {categories?.map((cat) => (
           <section key={cat.id} className="mt-14">
             <h2 className="text-2xl font-semibold mb-6">{cat.name}</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
