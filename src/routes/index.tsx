@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Check, Zap, Shield, Cpu, HardDrive, Globe, Headphones, Server, ArrowRight, Sparkles, ChevronDown, Gamepad2, Box, Cloud, Database, LifeBuoy, FileText, MessageCircle, Users } from "lucide-react";
 import heroImg from "@/assets/hero-nebula.jpg";
+import { SiteHeader } from "@/components/SiteChrome";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
