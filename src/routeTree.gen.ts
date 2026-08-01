@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MinecraftIndexRouteImport } from './routes/minecraft.index'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 
 const DashboardRoute = DashboardRouteImport.update({
@@ -29,6 +30,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MinecraftIndexRoute = MinecraftIndexRouteImport.update({
+  id: '/minecraft/',
+  path: '/minecraft/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutPlanIdRoute = CheckoutPlanIdRouteImport.update({
   id: '/checkout/$planId',
   path: '/checkout/$planId',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/minecraft/': typeof MinecraftIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/minecraft': typeof MinecraftIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,20 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
+  '/minecraft/': typeof MinecraftIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/checkout/$planId'
+  fullPaths: '/' | '/auth' | '/dashboard' | '/checkout/$planId' | '/minecraft/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/checkout/$planId'
-  id: '__root__' | '/' | '/auth' | '/dashboard' | '/checkout/$planId'
+  to: '/' | '/auth' | '/dashboard' | '/checkout/$planId' | '/minecraft'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/checkout/$planId'
+    | '/minecraft/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +82,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
+  MinecraftIndexRoute: typeof MinecraftIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/minecraft/': {
+      id: '/minecraft/'
+      path: '/minecraft'
+      fullPath: '/minecraft/'
+      preLoaderRoute: typeof MinecraftIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/$planId': {
       id: '/checkout/$planId'
       path: '/checkout/$planId'
@@ -107,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
+  MinecraftIndexRoute: MinecraftIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
