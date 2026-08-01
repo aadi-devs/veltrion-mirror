@@ -9,23 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as VpsRouteImport } from './routes/vps'
-import { Route as MinecraftRouteImport } from './routes/minecraft'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 
-const VpsRoute = VpsRouteImport.update({
-  id: '/vps',
-  path: '/vps',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MinecraftRoute = MinecraftRouteImport.update({
-  id: '/minecraft',
-  path: '/minecraft',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -51,16 +39,12 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
-  '/minecraft': typeof MinecraftRoute
-  '/vps': typeof VpsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
-  '/minecraft': typeof MinecraftRoute
-  '/vps': typeof VpsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
 }
 export interface FileRoutesById {
@@ -68,56 +52,25 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
-  '/minecraft': typeof MinecraftRoute
-  '/vps': typeof VpsRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/auth'
-    | '/dashboard'
-    | '/minecraft'
-    | '/vps'
-    | '/checkout/$planId'
+  fullPaths: '/' | '/auth' | '/dashboard' | '/checkout/$planId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/minecraft' | '/vps' | '/checkout/$planId'
-  id:
-    | '__root__'
-    | '/'
-    | '/auth'
-    | '/dashboard'
-    | '/minecraft'
-    | '/vps'
-    | '/checkout/$planId'
+  to: '/' | '/auth' | '/dashboard' | '/checkout/$planId'
+  id: '__root__' | '/' | '/auth' | '/dashboard' | '/checkout/$planId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
-  MinecraftRoute: typeof MinecraftRoute
-  VpsRoute: typeof VpsRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/vps': {
-      id: '/vps'
-      path: '/vps'
-      fullPath: '/vps'
-      preLoaderRoute: typeof VpsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/minecraft': {
-      id: '/minecraft'
-      path: '/minecraft'
-      fullPath: '/minecraft'
-      preLoaderRoute: typeof MinecraftRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -153,8 +106,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
-  MinecraftRoute: MinecraftRoute,
-  VpsRoute: VpsRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
 }
 export const routeTree = rootRouteImport
