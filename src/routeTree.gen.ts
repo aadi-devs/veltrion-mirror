@@ -14,6 +14,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VpsIndexRouteImport } from './routes/vps.index'
 import { Route as MinecraftIndexRouteImport } from './routes/minecraft.index'
+import { Route as VpsTypeRouteImport } from './routes/vps.$type'
 import { Route as MinecraftCategoryRouteImport } from './routes/minecraft.$category'
 import { Route as CheckoutPlanIdRouteImport } from './routes/checkout.$planId'
 
@@ -42,6 +43,11 @@ const MinecraftIndexRoute = MinecraftIndexRouteImport.update({
   path: '/minecraft/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VpsTypeRoute = VpsTypeRouteImport.update({
+  id: '/vps/$type',
+  path: '/vps/$type',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MinecraftCategoryRoute = MinecraftCategoryRouteImport.update({
   id: '/minecraft/$category',
   path: '/minecraft/$category',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
+  '/vps/$type': typeof VpsTypeRoute
   '/minecraft/': typeof MinecraftIndexRoute
   '/vps/': typeof VpsIndexRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
+  '/vps/$type': typeof VpsTypeRoute
   '/minecraft': typeof MinecraftIndexRoute
   '/vps': typeof VpsIndexRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/checkout/$planId': typeof CheckoutPlanIdRoute
   '/minecraft/$category': typeof MinecraftCategoryRoute
+  '/vps/$type': typeof VpsTypeRoute
   '/minecraft/': typeof MinecraftIndexRoute
   '/vps/': typeof VpsIndexRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/checkout/$planId'
     | '/minecraft/$category'
+    | '/vps/$type'
     | '/minecraft/'
     | '/vps/'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/checkout/$planId'
     | '/minecraft/$category'
+    | '/vps/$type'
     | '/minecraft'
     | '/vps'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/checkout/$planId'
     | '/minecraft/$category'
+    | '/vps/$type'
     | '/minecraft/'
     | '/vps/'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   CheckoutPlanIdRoute: typeof CheckoutPlanIdRoute
   MinecraftCategoryRoute: typeof MinecraftCategoryRoute
+  VpsTypeRoute: typeof VpsTypeRoute
   MinecraftIndexRoute: typeof MinecraftIndexRoute
   VpsIndexRoute: typeof VpsIndexRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MinecraftIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/vps/$type': {
+      id: '/vps/$type'
+      path: '/vps/$type'
+      fullPath: '/vps/$type'
+      preLoaderRoute: typeof VpsTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/minecraft/$category': {
       id: '/minecraft/$category'
       path: '/minecraft/$category'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   CheckoutPlanIdRoute: CheckoutPlanIdRoute,
   MinecraftCategoryRoute: MinecraftCategoryRoute,
+  VpsTypeRoute: VpsTypeRoute,
   MinecraftIndexRoute: MinecraftIndexRoute,
   VpsIndexRoute: VpsIndexRoute,
 }
