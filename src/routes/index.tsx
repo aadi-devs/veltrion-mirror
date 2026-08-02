@@ -189,28 +189,21 @@ function Plans() {
   );
 }
 
-const locations = ["New York", "Los Angeles", "Dallas", "London", "Frankfurt", "Warsaw", "Singapore", "Sydney"];
-
 function Locations() {
   return (
     <section id="locations" className="py-24 px-6 border-t border-border">
       <div className="max-w-6xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--primary-glow)" }}>Global Network</p>
-          <h2 className="text-4xl md:text-5xl font-bold">8 regions. One low ping.</h2>
+          <h2 className="text-4xl md:text-5xl font-bold">Our nodes, live on the globe.</h2>
+          <p className="mt-4 text-muted-foreground">Spin it, zoom it, hover a node to see where your server lives.</p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {locations.map((loc) => (
-            <div key={loc} className="p-5 rounded-xl border border-border bg-card/40 backdrop-blur flex items-center gap-3">
-              <Server className="w-4 h-4" style={{ color: "var(--primary-glow)" }} />
-              <span className="font-medium">{loc}</span>
-            </div>
-          ))}
-        </div>
+        <NodeGlobe />
       </div>
     </section>
   );
 }
+
 
 function CTA() {
   return (
