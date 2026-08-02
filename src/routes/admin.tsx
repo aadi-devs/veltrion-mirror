@@ -32,7 +32,7 @@ export const Route = createFileRoute("/admin")({
 
 function AdminPage() {
   const { user, isLoading } = useAuth();
-  const [tab, setTab] = useState<"orders" | "plans">("orders");
+  const [tab, setTab] = useState<"orders" | "plans" | "nodes">("orders");
 
   if (isLoading) {
     return (
@@ -70,7 +70,7 @@ function AdminPage() {
   return (
     <Shell>
       <div className="inline-flex rounded-xl border border-border bg-card/60 p-1">
-        {(["orders", "plans"] as const).map((t) => (
+        {(["orders", "plans", "nodes"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
@@ -83,10 +83,115 @@ function AdminPage() {
           </button>
         ))}
       </div>
-      {tab === "orders" ? <OrdersPanel /> : <PlansPanel />}
+      {tab === "orders" ? <OrdersPanel /> : tab === "plans" ? <PlansPanel /> : <NodesPanel />}
     </Shell>
   );
 }
+
+function NodesPanel() {
+  const [nodes, setNodes] = useState<NetworkNode[]>(() => loadNodes());
+
+  useEffect(() => {
+    setNodes(loadNodes());
+  }, []);
+
+  const commit = (next: NetworkNode[]) => {
+    setNodes(next);
+    saveNodes(next);
+  };
+
+  const update = (id: string, patch: Partial<NetworkNode>) =>
+    commit(nodes.map((n) => (n.id === id ? { ...n, ...patch } : n)));
+
+  const add = () =>
+    commit([
+      ...nodes,
+      {
+        id: `node-${Date.now()}`,
+        city: "New city",
+        country: "Country",
+        lat: 0,
+        lon: 0,
+        status: "planned",
+      },
+    ]);
+
+  return (
+    <div className="mt-6">
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          onClick={add}
+          className="text-xs font-semibold px-3 py-2 rounded-lg text-primary-foreground inline-flex items-center gap-1"
+          style={{ background: "var(--gradient-primary)" }}
+        >
+          <Plus className="w-3.5 h-3.5" /> Add node
+        </button>
+        <button
+          onClick={() => {
+            resetNodes();
+            setNodes(loadNodes());
+          }}
+          className="text-xs font-semibold px-3 py-2 rounded-lg border border-border inline-flex items-center gap-1"
+        >
+          <RotateCcw className="w-3.5 h-3.5" /> Reset to defaults
+        </button>
+        <span className="text-xs text-muted-foreground">
+          Changes appear instantly on the landing page globe.
+        </span>
+      </div>
+
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {nodes.map((n) => (
+          <div key={n.id} className="rounded-2xl border border-border bg-card/60 p-5 space-y-3">
+            <div className="flex items-center justify-between gap-2">
+              <input
+                value={n.city}
+                onChange={(e) => update(n.id, { city: e.target.value })}
+                className="flex-1 bg-transparent border-b border-border pb-1 font-semibold focus:outline-none focus:border-primary"
+                aria-label="City"
+              />
+              <button
+                onClick={() => commit(nodes.filter((x) => x.id !== n.id))}
+                className="text-muted-foreground hover:text-destructive"
+                aria-label={`Remove ${n.city}`}
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <Field label="Country" value={n.country} onChange={(v) => update(n.id, { country: v })} />
+              <label className="block">
+                <span className="text-[11px] uppercase tracking-wide text-muted-foreground">Status</span>
+                <select
+                  value={n.status}
+                  onChange={(e) => update(n.id, { status: e.target.value as NetworkNode["status"] })}
+                  className="w-full bg-transparent border border-border rounded-lg px-2 py-1 mt-1 focus:outline-none focus:border-primary"
+                >
+                  {["online", "maintenance", "planned"].map((s) => (
+                    <option key={s} value={s} className="bg-background">
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <Field
+                label="Latitude"
+                value={String(n.lat)}
+                onChange={(v) => update(n.id, { lat: Number(v) || 0 })}
+              />
+              <Field
+                label="Longitude"
+                value={String(n.lon)}
+                onChange={(v) => update(n.id, { lon: Number(v) || 0 })}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 
 function Shell({ children }: { children: React.ReactNode }) {
   return (
