@@ -163,21 +163,8 @@ export function StatsOrbit({ metrics = METRICS }: { metrics?: Metric[] }) {
         ctx.fill();
         ctx.shadowBlur = 0;
 
-        // label along the gap
-        ctx.save();
-        ctx.font = `${hot ? "600 " : "500 "}11px "Space Grotesk", system-ui, sans-serif`;
-        ctx.fillStyle = hot ? "oklch(0.97 0.01 285)" : "oklch(0.72 0.03 285 / 0.85)";
-        ctx.textAlign = "right";
-        ctx.textBaseline = "middle";
-        ctx.fillText(m.label.toUpperCase(), cx - 14, cy + r * 0.0 - r + ringGap * 0.0 + 0);
-        ctx.restore();
-        ctx.save();
-        ctx.font = `500 11px "Space Grotesk", system-ui, sans-serif`;
-        ctx.fillStyle = hot ? `oklch(0.9 0.14 ${m.hue})` : "oklch(0.72 0.03 285 / 0.6)";
-        ctx.textAlign = "left";
-        ctx.textBaseline = "middle";
-        ctx.fillText(`${m.value}${m.suffix ?? ""}`, cx + 14, cy - r);
-        ctx.restore();
+        // (labels are rendered as HTML alongside the canvas to avoid overlap)
+
       });
 
       // waveform core
