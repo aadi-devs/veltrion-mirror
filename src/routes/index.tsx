@@ -158,7 +158,7 @@ function Hero() {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
               Deploy
               <br />
-              <span className="shimmer-text caret">{typed}</span>
+              <span className="shimmer-text caret inline-block min-h-[1.1em]">{typed || "\u00A0"}</span>
               <br />
               in 60 seconds.
             </h1>
