@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Check, Loader2, ServerCrash } from "lucide-react";
 import type { BillingCycle, PlanCategory } from "@/lib/api";
 import { SiteHeader, SiteFooter } from "@/components/SiteChrome";
+import { Reveal } from "@/components/Reveal";
 
 const cycles: { id: BillingCycle; label: string }[] = [
   { id: "monthly", label: "Monthly" },
@@ -44,8 +45,10 @@ export function PlansPage({
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       <main className="max-w-7xl mx-auto px-6 pt-16">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">{title}</h1>
-        <p className="mt-3 text-muted-foreground max-w-2xl">{subtitle}</p>
+        <Reveal from="down">
+          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">{title}</h1>
+          <p className="mt-3 text-muted-foreground max-w-2xl">{subtitle}</p>
+        </Reveal>
 
         {tabs && (
           <div className="mt-8 flex flex-wrap gap-2">
@@ -99,10 +102,10 @@ export function PlansPage({
           <section key={cat.id} className="mt-14">
             <h2 className="text-2xl font-semibold mb-6">{cat.name}</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {cat.plans.map((plan) => (
+              {cat.plans.map((plan, idx) => (
+                <Reveal key={plan.id} from="scale" delay={(idx % 4) * 70} className="h-full">
                 <div
-                  key={plan.id}
-                  className="rounded-2xl border border-border bg-card/60 backdrop-blur p-6 flex flex-col hover:border-primary/50 transition"
+                  className="group lift scan-card h-full rounded-2xl border border-border bg-card/60 backdrop-blur p-6 flex flex-col hover:border-primary/60"
                   style={{ boxShadow: "var(--shadow-card)" }}
                 >
                   <div className="text-sm text-muted-foreground">{cat.name}</div>
