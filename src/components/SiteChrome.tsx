@@ -24,26 +24,35 @@ function NavDropdown({
     <div className="relative group">
       <Link
         to={to}
-        className="flex items-center gap-1 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition"
+        className="relative flex items-center gap-1 px-3 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card/60 transition-all duration-300 group-hover:-translate-y-0.5"
       >
         {label}
-        <ChevronDown className="w-3.5 h-3.5 transition-transform group-hover:rotate-180" />
+        <ChevronDown className="w-3.5 h-3.5 transition-transform duration-300 group-hover:rotate-180" />
+        <span
+          className="pointer-events-none absolute left-3 right-3 -bottom-0.5 h-[1.5px] origin-right scale-x-0 group-hover:scale-x-100 group-hover:origin-left transition-transform duration-300"
+          style={{ background: "var(--gradient-primary)" }}
+        />
       </Link>
-      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 min-w-[340px]">
+      <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 min-w-[340px] opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
         <div
-          className="rounded-2xl border border-border bg-popover/95 backdrop-blur-xl p-2"
+          className="relative rounded-2xl border border-border bg-popover/95 backdrop-blur-xl p-2 origin-top scale-95 group-hover:scale-100 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{ boxShadow: "var(--shadow-card)" }}
         >
-          {items.map((item) => {
+          <span
+            className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 rotate-45 rounded-[3px] border-l border-t border-border bg-popover"
+            aria-hidden
+          />
+          {items.map((item, i) => {
             const Icon = icons[item.slug] ?? Server;
             return (
               <Link
                 key={item.slug}
                 to={`${to}/${item.slug}`}
-                className="flex items-start gap-3 p-3 rounded-xl hover:bg-card transition"
+                className="group/item flex items-start gap-3 p-3 rounded-xl hover:bg-card transition-all duration-300 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 hover:translate-x-1"
+                style={{ transitionDelay: `${80 + i * 60}ms` }}
               >
                 <div
-                  className="w-9 h-9 shrink-0 rounded-lg flex items-center justify-center"
+                  className="w-9 h-9 shrink-0 rounded-lg flex items-center justify-center transition-transform duration-300 group-hover/item:rotate-[-8deg] group-hover/item:scale-110"
                   style={{ background: "var(--gradient-primary)" }}
                 >
                   <Icon className="w-4 h-4 text-primary-foreground" />
@@ -60,6 +69,7 @@ function NavDropdown({
     </div>
   );
 }
+
 
 export function SiteHeader() {
   const { user, logout } = useAuth();

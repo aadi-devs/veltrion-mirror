@@ -15,7 +15,7 @@ import {
 import { SiteHeader } from "@/components/SiteChrome";
 import { NodeGlobe } from "@/components/NodeGlobe";
 import { HeroCanvas } from "@/components/HeroCanvas";
-import { StatsGraph3D } from "@/components/StatsGraph3D";
+import { StatsOrbit } from "@/components/StatsOrbit";
 import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/")({
@@ -44,8 +44,8 @@ function Landing() {
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <SiteHeader />
       <Hero />
-      <Ticker />
       <StatsSection />
+
       <Features />
       <Plans />
       <Locations />
@@ -60,33 +60,44 @@ function Landing() {
 const ROTATING = ["Minecraft servers", "VPS instances", "Discord bots", "web apps"];
 
 function useTypewriter(words: string[]) {
-  const [text, setText] = useState("");
-  const idx = useRef(0);
-  const dir = useRef<1 | -1>(1);
+  const [text, setText] = useState(words[0] ?? "");
 
   useEffect(() => {
     let timer: number;
+    let wordIdx = 0;
+    let charIdx = words[0]?.length ?? 0;
+    let dir: 1 | -1 = -1;
+    let cancelled = false;
+
     const tick = () => {
-      const word = words[idx.current % words.length]!;
-      const cur = word.slice(0, text.length + dir.current);
-      setText(cur);
-      let delay = dir.current === 1 ? 65 : 32;
-      if (dir.current === 1 && cur === word) {
-        dir.current = -1;
-        delay = 1600;
-      } else if (dir.current === -1 && cur === "") {
-        dir.current = 1;
-        idx.current += 1;
-        delay = 260;
+      if (cancelled) return;
+      const word = words[wordIdx % words.length]!;
+      charIdx += dir;
+      charIdx = Math.max(0, Math.min(word.length, charIdx));
+      setText(word.slice(0, charIdx));
+
+      let delay = dir === 1 ? 62 : 30;
+      if (dir === 1 && charIdx === word.length) {
+        dir = -1;
+        delay = 1800;
+      } else if (dir === -1 && charIdx === 0) {
+        dir = 1;
+        wordIdx += 1;
+        delay = 320;
       }
       timer = window.setTimeout(tick, delay);
     };
-    timer = window.setTimeout(tick, 90);
-    return () => window.clearTimeout(timer);
-  }, [text, words]);
+
+    timer = window.setTimeout(tick, 2000);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [words]);
 
   return text;
 }
+
 
 function Hero() {
   const typed = useTypewriter(ROTATING);
@@ -147,7 +158,7 @@ function Hero() {
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05]">
               Deploy
               <br />
-              <span className="shimmer-text caret">{typed}</span>
+              <span className="shimmer-text caret inline-block min-h-[1.1em]">{typed || "\u00A0"}</span>
               <br />
               in 60 seconds.
             </h1>
@@ -245,38 +256,7 @@ function ConsoleLines() {
   );
 }
 
-/* ---------------- Ticker ---------------- */
-
-const TICKER = [
-  "99.98% UPTIME",
-  "NVMe GEN4",
-  "4.2 Tbps DDOS SHIELD",
-  "RYZEN 9 7950X",
-  "24 NODES",
-  "60s DEPLOY",
-  "24/7 HUMAN SUPPORT",
-  "FULL MOD SUPPORT",
-];
-
-function Ticker() {
-  return (
-    <div className="marquee-wrap relative border-y border-border overflow-hidden py-3 bg-card/30">
-      <div className="marquee-track flex gap-10 w-max whitespace-nowrap">
-        {[...TICKER, ...TICKER].map((t, i) => (
-          <span
-            key={t + i}
-            className="text-xs tracking-[0.25em] font-semibold text-muted-foreground flex items-center gap-10"
-          >
-            {t}
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--primary-glow)" }} />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ---------------- 3D Stats ---------------- */
+/* ---------------- Telemetry ---------------- */
 
 function StatsSection() {
   return (
@@ -286,13 +266,14 @@ function StatsSection() {
           <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--primary-glow)" }}>
             Live Fleet Telemetry
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold">Our numbers, in three dimensions.</h2>
+          <h2 className="text-4xl md:text-5xl font-bold">The fleet, on one dial.</h2>
           <p className="mt-4 text-muted-foreground">
-            A real 3D graph — orbit it, zoom it, hover any bar to read the exact figure.
+            Every ring is a live metric. Hover one to lock it into the readout.
           </p>
         </Reveal>
+
         <Reveal from="scale" delay={120}>
-          <StatsGraph3D />
+          <StatsOrbit />
         </Reveal>
       </div>
     </section>
