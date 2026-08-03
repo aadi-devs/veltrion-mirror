@@ -292,7 +292,7 @@ function StatsSection() {
           </p>
         </Reveal>
         <Reveal from="scale" delay={120}>
-          <StatsGraph3D />
+          <StatsOrbit />
         </Reveal>
       </div>
     </section>
