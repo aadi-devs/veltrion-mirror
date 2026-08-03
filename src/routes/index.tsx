@@ -245,38 +245,7 @@ function ConsoleLines() {
   );
 }
 
-/* ---------------- Ticker ---------------- */
-
-const TICKER = [
-  "99.98% UPTIME",
-  "NVMe GEN4",
-  "4.2 Tbps DDOS SHIELD",
-  "RYZEN 9 7950X",
-  "24 NODES",
-  "60s DEPLOY",
-  "24/7 HUMAN SUPPORT",
-  "FULL MOD SUPPORT",
-];
-
-function Ticker() {
-  return (
-    <div className="marquee-wrap relative border-y border-border overflow-hidden py-3 bg-card/30">
-      <div className="marquee-track flex gap-10 w-max whitespace-nowrap">
-        {[...TICKER, ...TICKER].map((t, i) => (
-          <span
-            key={t + i}
-            className="text-xs tracking-[0.25em] font-semibold text-muted-foreground flex items-center gap-10"
-          >
-            {t}
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--primary-glow)" }} />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ---------------- 3D Stats ---------------- */
+/* ---------------- Telemetry ---------------- */
 
 function StatsSection() {
   return (
@@ -286,11 +255,12 @@ function StatsSection() {
           <p className="text-sm font-semibold uppercase tracking-widest mb-3" style={{ color: "var(--primary-glow)" }}>
             Live Fleet Telemetry
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold">Our numbers, in three dimensions.</h2>
+          <h2 className="text-4xl md:text-5xl font-bold">The fleet, on one dial.</h2>
           <p className="mt-4 text-muted-foreground">
-            A real 3D graph — orbit it, zoom it, hover any bar to read the exact figure.
+            Every ring is a live metric. Hover one to lock it into the readout.
           </p>
         </Reveal>
+
         <Reveal from="scale" delay={120}>
           <StatsOrbit />
         </Reveal>
