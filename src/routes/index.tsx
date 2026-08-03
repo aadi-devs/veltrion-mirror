@@ -45,7 +45,7 @@ function Landing() {
       <SiteHeader />
       <Hero />
       <StatsSection />
-      <StatsSection />
+
       <Features />
       <Plans />
       <Locations />
