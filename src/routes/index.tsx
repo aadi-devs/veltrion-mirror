@@ -60,33 +60,44 @@ function Landing() {
 const ROTATING = ["Minecraft servers", "VPS instances", "Discord bots", "web apps"];
 
 function useTypewriter(words: string[]) {
-  const [text, setText] = useState("");
-  const idx = useRef(0);
-  const dir = useRef<1 | -1>(1);
+  const [text, setText] = useState(words[0] ?? "");
 
   useEffect(() => {
     let timer: number;
+    let wordIdx = 0;
+    let charIdx = words[0]?.length ?? 0;
+    let dir: 1 | -1 = -1;
+    let cancelled = false;
+
     const tick = () => {
-      const word = words[idx.current % words.length]!;
-      const cur = word.slice(0, text.length + dir.current);
-      setText(cur);
-      let delay = dir.current === 1 ? 65 : 32;
-      if (dir.current === 1 && cur === word) {
-        dir.current = -1;
-        delay = 1600;
-      } else if (dir.current === -1 && cur === "") {
-        dir.current = 1;
-        idx.current += 1;
-        delay = 260;
+      if (cancelled) return;
+      const word = words[wordIdx % words.length]!;
+      charIdx += dir;
+      charIdx = Math.max(0, Math.min(word.length, charIdx));
+      setText(word.slice(0, charIdx));
+
+      let delay = dir === 1 ? 62 : 30;
+      if (dir === 1 && charIdx === word.length) {
+        dir = -1;
+        delay = 1800;
+      } else if (dir === -1 && charIdx === 0) {
+        dir = 1;
+        wordIdx += 1;
+        delay = 320;
       }
       timer = window.setTimeout(tick, delay);
     };
-    timer = window.setTimeout(tick, 90);
-    return () => window.clearTimeout(timer);
-  }, [text, words]);
+
+    timer = window.setTimeout(tick, 2000);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [words]);
 
   return text;
 }
+
 
 function Hero() {
   const typed = useTypewriter(ROTATING);
