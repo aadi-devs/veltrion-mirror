@@ -15,7 +15,7 @@ import {
 import { SiteHeader } from "@/components/SiteChrome";
 import { NodeGlobe } from "@/components/NodeGlobe";
 import { HeroCanvas } from "@/components/HeroCanvas";
-import { StatsGraph3D } from "@/components/StatsGraph3D";
+import { StatsOrbit } from "@/components/StatsOrbit";
 import { Reveal } from "@/components/Reveal";
 
 export const Route = createFileRoute("/")({
