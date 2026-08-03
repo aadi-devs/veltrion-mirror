@@ -223,7 +223,7 @@ export function StatsOrbit({ metrics = METRICS }: { metrics?: Metric[] }) {
       style={{ boxShadow: "var(--shadow-card)" }}
     >
       <canvas ref={canvasRef} className="block w-full cursor-crosshair touch-none" />
-      <div className="pointer-events-none absolute left-6 top-6">
+      <div className="absolute left-6 top-6 w-[210px] max-w-[45%]">
         <div className="text-[10px] tracking-[0.3em] text-muted-foreground">LIVE TELEMETRY</div>
         <div className="mt-1 flex items-baseline gap-1">
           <span className="text-3xl font-bold shimmer-text">
@@ -232,22 +232,47 @@ export function StatsOrbit({ metrics = METRICS }: { metrics?: Metric[] }) {
           </span>
         </div>
         <div className="text-xs text-muted-foreground">{m.label}</div>
+
+        <ul className="mt-6 space-y-1.5">
+          {metrics.map((x, i) => (
+            <li key={x.label}>
+              <button
+                type="button"
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                className="w-full flex items-center gap-2.5 rounded-lg border px-2.5 py-1.5 text-left transition-all duration-300 hover:translate-x-1"
+                style={{
+                  borderColor: i === active ? `oklch(0.8 0.2 ${x.hue} / 0.6)` : "transparent",
+                  background: i === active ? `oklch(0.8 0.2 ${x.hue} / 0.1)` : "transparent",
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0 transition-transform duration-300"
+                  style={{
+                    background: `oklch(0.8 0.2 ${x.hue})`,
+                    transform: i === active ? "scale(1.9)" : "scale(1)",
+                    boxShadow: i === active ? `0 0 12px oklch(0.8 0.2 ${x.hue})` : "none",
+                  }}
+                />
+                <span
+                  className="text-[11px] flex-1 truncate transition-colors"
+                  style={{ color: i === active ? "var(--foreground)" : "var(--muted-foreground)" }}
+                >
+                  {x.label}
+                </span>
+                <span
+                  className="text-[11px] font-mono tabular-nums transition-colors"
+                  style={{ color: i === active ? `oklch(0.9 0.14 ${x.hue})` : "var(--muted-foreground)" }}
+                >
+                  {x.value}
+                  {x.suffix}
+                </span>
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
-      <div className="pointer-events-none absolute right-6 bottom-6 flex flex-wrap justify-end gap-2 max-w-[60%]">
-        {metrics.map((x, i) => (
-          <span
-            key={x.label}
-            className="text-[10px] px-2 py-1 rounded-full border transition-all duration-300"
-            style={{
-              borderColor: i === active ? `oklch(0.8 0.2 ${x.hue} / 0.7)` : "var(--border)",
-              color: i === active ? `oklch(0.9 0.14 ${x.hue})` : "var(--muted-foreground)",
-              background: i === active ? `oklch(0.8 0.2 ${x.hue} / 0.1)` : "transparent",
-            }}
-          >
-            {x.label}
-          </span>
-        ))}
-      </div>
+
     </div>
   );
 }
