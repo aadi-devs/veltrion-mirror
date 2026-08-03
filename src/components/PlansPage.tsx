@@ -125,13 +125,15 @@ export function PlansPage({
                     to="/checkout/$planId"
                     params={{ planId: plan.id }}
                     search={{ cycle, category }}
-                    className="mt-6 text-center text-sm font-semibold px-4 py-2.5 rounded-lg text-primary-foreground"
+                    className="glow-btn press mt-6 text-center text-sm font-semibold px-4 py-2.5 rounded-lg text-primary-foreground"
                     style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}
                   >
                     Order now
                   </Link>
                 </div>
+                </Reveal>
               ))}
+
             </div>
           </section>
         ))}
